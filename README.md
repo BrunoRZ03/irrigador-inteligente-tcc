@@ -59,17 +59,15 @@ Nesta seção serão disponibilizadas fotografias e vídeos que demonstram as et
 <p align="center">
   <img src="imagens/Sistema.jpeg" width="45%">
   <img src="imagens/Medida Controle.jpeg" width="45%">
+  <img src="imagens/Medida Sistema.jpeg" width="45%">
+  <img src="imagens/Imagem Dashboard.jpeg" width="45%">
 </p>
 
 ### Vídeos demonstrativos
-<p align="center">
-  <video width="640" controls>
-    <source src="imagens/Video%20Irrigando.mp4" type="video/mp4">
-    Seu navegador não suporta a reprodução de vídeos.
-  </video>
-</p>
 
-▶ Assistir ao vídeo no GitHub
+#### Funcionamento da irrigação automatizada
+
+[▶ Clique aqui para assistir ao vídeo](https://github.com/BrunoRZ03/irrigador-inteligente-tcc/blob/main/imagens/Video%20Irrigando.mp4)
 
 ## Código-fonte
 
