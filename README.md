@@ -57,19 +57,29 @@ Nesta seção estão disponíveis fotografias e vídeos que demonstram as etapas
 
 ### Fotografias
 
-<p align="center">
-  <strong>Sistema de irrigação</strong><br>
-  <img src="imagens/Sistema.jpeg" width="45%"><br><br>
+### Fotografias
 
-  <strong>Medição de umidade – Controle manual</strong><br>
-  <img src="imagens/Medida Controle.jpeg" width="45%"><br><br>
+<div align="center">
 
-  <strong>Medição de umidade – Sistema automatizado</strong><br>
-  <img src="imagens/Medida Sistema.jpeg" width="45%"><br><br>
+<strong>Sistema de irrigação</strong><br>
+<img src="imagens/Sistema.jpeg" width="45%">
 
-  <strong>Dashboard de monitoramento – Blynk</strong><br>
-  <img src="imagens/Imagem Dashboard.jpeg" width="45%">
-</p>
+<br><br>
+
+<strong>Medição de umidade – Controle manual</strong><br>
+<img src="imagens/Medida Controle.jpeg" width="45%">
+
+<br><br>
+
+<strong>Medição de umidade – Sistema automatizado</strong><br>
+<img src="imagens/Medida Sistema.jpeg" width="45%">
+
+<br><br>
+
+<strong>Dashboard de monitoramento – Blynk</strong><br>
+<img src="imagens/Imagem Dashboard.jpeg" width="45%">
+
+</div>
 
 ### Vídeos demonstrativos
 
