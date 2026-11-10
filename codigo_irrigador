@@ -1,0 +1,297 @@
+#define BLYNK_TEMPLATE_ID "SEU_TEMPLATE_ID"
+#define BLYNK_TEMPLATE_NAME "Irrigador"
+#define BLYNK_AUTH_TOKEN "SEU_TOKEN"
+
+#include <WiFi.h>
+#include <BlynkSimpleEsp32.h>
+#include "DHT.h"
+
+char WIFI_SSID[] = "SUA_REDE";
+char WIFI_PASS[] = "SUA_SENHA";
+
+#define DHTPIN 4
+#define DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
+
+const int pinoHW390 = 34;
+const int VALOR_SECO = 2500;
+const int VALOR_MOLHADO = 1100;
+
+float umidadeDesejada = 75.0;
+
+#define IN3 26
+#define IN4 27
+#define ENB 25
+
+const int FREQUENCIA_PWM = 1000;
+const int RESOLUCAO_PWM = 8;
+
+const int PWM_MINIMO = 105;
+const int PWM_MAXIMO = 255;
+
+float Kp = 3.0;
+float Ki = 0.3;
+float Kd = 1.0;
+
+float erroAnterior = 0;
+float integral = 0;
+
+unsigned long tempoAnterior = 0;
+
+unsigned long ultimoEnvioBlynk = 0;
+const unsigned long INTERVALO_BLYNK = 600000; // 10 minutos
+
+// =====================================================
+// RECEBIMENTO DE DADOS DO BLYNK
+// =====================================================
+
+BLYNK_WRITE(V3) {
+  umidadeDesejada = param.asDouble();
+  umidadeDesejada = constrain(umidadeDesejada, 0.0, 100.0);
+
+  Serial.print("Nova umidade desejada: ");
+  Serial.print(umidadeDesejada, 1);
+  Serial.println("%");
+}
+
+BLYNK_WRITE(V4) {
+  Kp = param.asDouble();
+
+  if (Kp < 0) Kp = 0;
+
+  Serial.print("Novo Kp: ");
+  Serial.println(Kp, 2);
+}
+
+BLYNK_WRITE(V5) {
+  Ki = param.asDouble();
+
+  if (Ki < 0) Ki = 0;
+
+  Serial.print("Novo Ki: ");
+  Serial.println(Ki, 2);
+}
+
+BLYNK_WRITE(V6) {
+  Kd = param.asDouble();
+
+  if (Kd < 0) Kd = 0;
+
+  Serial.print("Novo Kd: ");
+  Serial.println(Kd, 2);
+}
+
+// =====================================================
+// CONTROLE DA BOMBA
+// =====================================================
+
+void controlarBomba(int velocidadePWM) {
+
+  if (velocidadePWM <= 0) {
+
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, LOW);
+    ledcWrite(ENB, 0);
+
+  } else {
+
+    digitalWrite(IN3, HIGH);
+    digitalWrite(IN4, LOW);
+    ledcWrite(ENB, velocidadePWM);
+
+  }
+}
+
+// =====================================================
+// SETUP
+// =====================================================
+
+void setup() {
+
+  Serial.begin(115200);
+
+  pinMode(pinoHW390, INPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENB, OUTPUT);
+
+  ledcAttach(ENB, FREQUENCIA_PWM, RESOLUCAO_PWM);
+
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+  ledcWrite(ENB, 0);
+
+  dht.begin();
+
+  tempoAnterior = millis();
+
+  Serial.println();
+  Serial.println("--------------------------------");
+  Serial.println("Irrigador Inteligente TCC");
+  Serial.println("--------------------------------");
+  Serial.println("Controle PID ativado");
+  Serial.println();
+
+  Blynk.begin(BLYNK_AUTH_TOKEN, WIFI_SSID, WIFI_PASS);
+}
+
+// =====================================================
+// LOOP
+// =====================================================
+
+void loop() {
+
+  // Mantém a comunicação com o Blynk
+  Blynk.run();
+
+  // ===================================================
+  // LEITURA DO SENSOR DE UMIDADE DO SOLO
+  // ===================================================
+
+  long soma = 0;
+
+  for (int i = 0; i < 10; i++) {
+    soma += analogRead(pinoHW390);
+    delay(10);
+  }
+
+  int valorSolo = soma / 10;
+
+  float umidadeSolo = map(
+    valorSolo,
+    VALOR_SECO,
+    VALOR_MOLHADO,
+    0,
+    100
+  );
+
+  umidadeSolo = constrain(umidadeSolo, 0, 100);
+
+  // ===================================================
+  // LEITURA DO DHT22
+  // ===================================================
+
+  float umidadeAr = dht.readHumidity();
+  float tempC = dht.readTemperature();
+
+  // ===================================================
+  // PID
+  // ===================================================
+
+  unsigned long tempoAtual = millis();
+
+  float dt = (tempoAtual - tempoAnterior) / 1000.0;
+
+  tempoAnterior = tempoAtual;
+
+  if (dt <= 0) dt = 0.01;
+
+  float erro = umidadeDesejada - umidadeSolo;
+
+  float proporcional = Kp * erro;
+
+  integral += erro * dt;
+
+  integral = constrain(integral, -100, 100);
+
+  float integralPID = Ki * integral;
+
+  float derivativo = Kd * (erro - erroAnterior) / dt;
+
+  erroAnterior = erro;
+
+  float saidaPID = proporcional + integralPID + derivativo;
+
+  int velocidadePWM = constrain(
+    (int)saidaPID,
+    0,
+    PWM_MAXIMO
+  );
+
+  if (
+    velocidadePWM > 0 &&
+    velocidadePWM < PWM_MINIMO
+  ) {
+    velocidadePWM = PWM_MINIMO;
+  }
+
+  controlarBomba(velocidadePWM);
+
+  // ===================================================
+  // INFORMAÇÕES DA BOMBA
+  // ===================================================
+
+  float velocidadeBomba =
+    (velocidadePWM / 255.0) * 100.0;
+
+  bool bombaLigada = velocidadePWM > 0;
+
+  // ===================================================
+  // ENVIO PARA O BLYNK
+  // SOMENTE A CADA 10 MINUTOS
+  // ===================================================
+
+  if (millis() - ultimoEnvioBlynk >= INTERVALO_BLYNK) {
+
+    ultimoEnvioBlynk = millis();
+
+    // Somente os dados necessários são enviados
+    Blynk.virtualWrite(V0, umidadeSolo);
+
+    if (!isnan(tempC)) {
+      Blynk.virtualWrite(V1, tempC);
+    }
+
+    if (!isnan(umidadeAr)) {
+      Blynk.virtualWrite(V2, umidadeAr);
+    }
+    Blynk.virtualWrite(V7, erro);
+    Blynk.virtualWrite(V8, velocidadeBomba);
+    Blynk.virtualWrite(V9, bombaLigada);
+  }
+
+  // ===================================================
+  // MONITOR SERIAL
+  // ===================================================
+
+  Serial.print("Temperatura Ar: ");
+
+  if (isnan(tempC)) {
+    Serial.print("ERRO");
+  } else {
+    Serial.print(tempC, 1);
+    Serial.print(" °C");
+  }
+
+  Serial.print(" | Umidade Ar: ");
+
+  if (isnan(umidadeAr)) {
+    Serial.print("ERRO");
+  } else {
+    Serial.print(umidadeAr, 1);
+    Serial.print("%");
+  }
+
+  Serial.print(" | Umidade Solo: ");
+  Serial.print(umidadeSolo, 1);
+  Serial.print("%");
+
+  Serial.print(" | Desejada: ");
+  Serial.print(umidadeDesejada, 1);
+  Serial.print("%");
+
+  Serial.print(" | Erro: ");
+  Serial.print(erro, 1);
+  Serial.print("%");
+
+  Serial.print(" | PWM: ");
+  Serial.print(velocidadePWM);
+
+  Serial.print(" | Bomba: ");
+  Serial.print(velocidadeBomba, 1);
+  Serial.println("%");
+
+  Serial.println("-----------------------------");
+
+  delay(2000);
+}
