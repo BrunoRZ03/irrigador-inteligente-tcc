@@ -94,7 +94,7 @@ O documento completo do Trabalho de Conclusão de Curso está disponível abaixo
 
 **Instituição:** Universidade São Francisco (USF)
 **Curso:** Engenharia de Computação
-**Orientador:** Luiz Carlos Freitas Junior
+**Orientador:** Luiz Carlos Freitas Júnior
 
 ---
 
