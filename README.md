@@ -57,8 +57,6 @@ Nesta seção estão disponíveis fotografias e vídeos que demonstram as etapas
 
 ### Fotografias
 
-### Fotografias
-
 <div align="center">
 
 <strong>Sistema de irrigação</strong><br>
