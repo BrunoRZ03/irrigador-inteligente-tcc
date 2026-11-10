@@ -103,7 +103,7 @@ A avaliação foi realizada com um vaso para cada método de irrigação, o que 
 
 O documento completo do Trabalho de Conclusão de Curso está disponível abaixo:
 
-**[Visualizar TCC em PDF](documentos/TCC.pdf)**
+[Veja o TCC completo](https://docs.google.com/document/d/14KR6qLoXtE1zAiznLFKTM1DxEQfJ8qtbXPhsEP3hT9g/edit?usp=sharing)
 
 ## Autores
 
