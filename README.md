@@ -67,8 +67,9 @@ Nesta seção serão disponibilizadas fotografias e vídeos que demonstram as et
 
 #### Funcionamento da irrigação automatizada
 
-[▶ Clique aqui para assistir ao vídeo](https://github.com/BrunoRZ03/irrigador-inteligente-tcc/blob/main/imagens/Video%20Irrigando.mp4)
+### Vídeo de funcionamento
 
+[▶ Assistir ao vídeo de funcionamento do irrigador](https://brunorz03.github.io/irrigador-inteligente-tcc/video.html)
 ## Código-fonte
 
 O código-fonte utilizado no desenvolvimento do sistema está disponível neste repositório, incluindo a implementação do controlador PID, leitura dos sensores, acionamento da bomba e comunicação com a plataforma IoT.
