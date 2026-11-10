@@ -57,16 +57,19 @@ Nesta seção serão disponibilizadas fotografias e vídeos que demonstram as et
 ### Fotografias
 
 <p align="center">
-  <img src="imagens/Sistema.jpg" width="45%">
-  <img src="imagens/Medida Controle.jpg" width="45%">
+  <img src="imagens/Sistema.jpeg" width="45%">
+  <img src="imagens/Medida Controle.jpeg" width="45%">
 </p>
 
 ### Vídeos demonstrativos
-<imagens width="640" controls>
-  <source src="imagens/Video Irrigando.mp4" type="video/mp4">
-  Seu navegador não suporta a reprodução de vídeos.
-</imagens>
+<p align="center">
+  <video width="640" controls>
+    <source src="imagens/Video%20Irrigando.mp4" type="video/mp4">
+    Seu navegador não suporta a reprodução de vídeos.
+  </video>
+</p>
 
+▶ Assistir ao vídeo no GitHub
 
 ## Código-fonte
 
