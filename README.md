@@ -111,6 +111,14 @@ A planilha com as referências bibliográficas utilizadas no desenvolvimento des
 
 **[📊 Acessar planilha de referências bibliográficas](https://docs.google.com/spreadsheets/d/1wQ--V_j9iHQTDuFCNRhxJn3xBa-0HEMxwgA_qVyy6vQ/edit?usp=sharing)**
 
+## Planilha de medições experimentais
+
+A planilha apresenta os registros das medições realizadas durante o experimento, no período de 5 a 12 de novembro de 2026. Foram registrados os valores de umidade do solo em horários aproximados, o valor de referência configurado, o erro do controlador PID, a velocidade de acionamento da bomba, o valor de PWM e a quantidade aproximada de água utilizada em cada ciclo de irrigação.
+
+Os dados permitem acompanhar o comportamento do sistema automatizado e analisar seu funcionamento ao longo do período experimental.
+
+**[📊 Acessar planilha de medições experimentais (05/11 a 12/11/2026)](https://docs.google.com/spreadsheets/d/1Y1G2gmPNcIJdVe6V0W7X07Vmpekss1zKYXBXXV5hW2g/edit?usp=sharing)**
+
 ## Autores
 
 - Bruno Ricci Zanoni
