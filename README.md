@@ -56,12 +56,17 @@ Nesta seção serão disponibilizadas fotografias e vídeos que demonstram as et
 
 ### Fotografias
 
-Sistema.jpeg
-
+<p align="center">
+  <img src="imagens/Sistema.jpg" width="45%">
+  <img src="imagens/Medida Controle.jpg" width="45%">
+</p>
 
 ### Vídeos demonstrativos
+<imagens width="640" controls>
+  <source src="imagens/Video Irrigando.mp4" type="video/mp4">
+  Seu navegador não suporta a reprodução de vídeos.
+</imagens>
 
-Video Irrigando.mp4
 
 ## Código-fonte
 
