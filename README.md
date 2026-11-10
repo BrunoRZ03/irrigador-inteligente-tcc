@@ -105,6 +105,12 @@ O documento completo do Trabalho de Conclusão de Curso está disponível abaixo
 
 [Veja o TCC completo](https://docs.google.com/document/d/14KR6qLoXtE1zAiznLFKTM1DxEQfJ8qtbXPhsEP3hT9g/edit?usp=sharing)
 
+## Referências bibliográficas
+
+A planilha com as referências bibliográficas utilizadas no desenvolvimento deste Trabalho de Conclusão de Curso está disponível abaixo.
+
+**[📊 Acessar planilha de referências bibliográficas](https://docs.google.com/spreadsheets/d/1wQ--V_j9iHQTDuFCNRhxJn3xBa-0HEMxwgA_qVyy6vQ/edit?usp=sharing)**
+
 ## Autores
 
 - Bruno Ricci Zanoni
