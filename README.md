@@ -56,11 +56,12 @@ Nesta seção serão disponibilizadas fotografias e vídeos que demonstram as et
 
 ### Fotografias
 
-*As imagens serão adicionadas conforme a organização dos registros experimentais.*
+Sistema.jpeg
+
 
 ### Vídeos demonstrativos
 
-*Os vídeos de funcionamento do sistema serão disponibilizados nesta seção.*
+Video Irrigando.mp4
 
 ## Código-fonte
 
