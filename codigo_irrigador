@@ -30,7 +30,7 @@ const int PWM_MINIMO = 105;
 const int PWM_MAXIMO = 255;
 
 float Kp = 3.0;
-float Ki = 0.3;
+float Ki = 0.1;
 float Kd = 1.0;
 
 float erroAnterior = 0;
@@ -38,8 +38,11 @@ float integral = 0;
 
 unsigned long tempoAnterior = 0;
 
-unsigned long ultimoEnvioBlynk = 0;
-const unsigned long INTERVALO_BLYNK = 600000; // 10 minutos
+unsigned long ultimoEnvioSolo = 0;
+unsigned long ultimoEnvioClima = 0;
+
+const unsigned long INTERVALO_SOLO = 180000;  // 3 minutos
+const unsigned long INTERVALO_CLIMA = 600000; // 10 minutos
 
 // =====================================================
 // RECEBIMENTO DE DADOS DO BLYNK
@@ -226,29 +229,38 @@ void loop() {
 
   bool bombaLigada = velocidadePWM > 0;
 
-  // ===================================================
-  // ENVIO PARA O BLYNK
-  // SOMENTE A CADA 10 MINUTOS
-  // ===================================================
+ // ===================================================
+// ENVIO DE DADOS PARA O BLYNK
+// ===================================================
 
-  if (millis() - ultimoEnvioBlynk >= INTERVALO_BLYNK) {
+// Dados do solo e da bomba: a cada 3 minutos
+if (millis() - ultimoEnvioSolo >= INTERVALO_SOLO) {
 
-    ultimoEnvioBlynk = millis();
+  ultimoEnvioSolo = millis();
 
-    // Somente os dados necessários são enviados
-    Blynk.virtualWrite(V0, umidadeSolo);
+  Blynk.virtualWrite(V0, umidadeSolo);
+  Blynk.virtualWrite(V7, erro);
+  Blynk.virtualWrite(V8, velocidadeBomba);
+  Blynk.virtualWrite(V9, bombaLigada);
 
-    if (!isnan(tempC)) {
-      Blynk.virtualWrite(V1, tempC);
-    }
+  Serial.println("Dados do solo e bomba enviados ao Blynk.");
+}
 
-    if (!isnan(umidadeAr)) {
-      Blynk.virtualWrite(V2, umidadeAr);
-    }
-    Blynk.virtualWrite(V7, erro);
-    Blynk.virtualWrite(V8, velocidadeBomba);
-    Blynk.virtualWrite(V9, bombaLigada);
+// Dados climáticos: a cada 10 minutos
+if (millis() - ultimoEnvioClima >= INTERVALO_CLIMA) {
+
+  ultimoEnvioClima = millis();
+
+  if (!isnan(tempC)) {
+    Blynk.virtualWrite(V1, tempC);
   }
+
+  if (!isnan(umidadeAr)) {
+    Blynk.virtualWrite(V2, umidadeAr);
+  }
+
+  Serial.println("Dados climaticos enviados ao Blynk.");
+}
 
   // ===================================================
   // MONITOR SERIAL
