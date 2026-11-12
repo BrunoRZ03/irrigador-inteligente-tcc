@@ -33,7 +33,7 @@ const int PWM_MAXIMO = 255;
 
 // PWM mínimo para a bomba realmente girar. CALIBRE NA SUA BOMBA:
 // aumente o PWM manualmente até ela partir e use esse valor (ou um pouco mais).
-const int PWM_MINIMO = 100;
+const int PWM_MINIMO = 105;
 
 // ---------------- PID ----------------
 double Kp = 3.0;
