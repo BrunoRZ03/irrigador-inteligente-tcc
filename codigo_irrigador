@@ -22,7 +22,7 @@ const int pinoHW390 = 34;
 const int VALOR_SECO = 2500;
 const int VALOR_MOLHADO = 1100;
 
-// ---------------- Bomba (ponte H) ----------------
+// ---------------- Bomba - Ponte H ----------------
 #define IN3 26
 #define IN4 27
 #define ENB 25
