@@ -30,9 +30,6 @@ const int VALOR_MOLHADO = 1100;
 const int FREQUENCIA_PWM = 1000;
 const int RESOLUCAO_PWM = 8;
 const int PWM_MAXIMO = 255;
-
-// PWM mínimo para a bomba realmente girar. CALIBRE NA SUA BOMBA:
-// aumente o PWM manualmente até ela partir e use esse valor (ou um pouco mais).
 const int PWM_MINIMO = 105;
 
 // ---------------- PID ----------------
